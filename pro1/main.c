@@ -153,7 +153,6 @@ int main() {
     GET_INPUT();
     RAT_init();
     while(1) {
-        getchar();
         if(CHECK_A_IN_goal()) {
             printf("A mouse have arrived goal.\n");
             break;
