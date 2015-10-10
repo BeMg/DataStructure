@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_SIZE 4
+#define MAX_SIZE 100
 
 
 typedef struct {
@@ -79,7 +79,6 @@ void ARAT_RUN() {
     stack_a[flag_A].f = RAT_A.f;
     stack_a[flag_A].x = RAT_A.x;
     stack_a[flag_A].y = RAT_A.y;
-    if(RAT_A.f == 2)printf("HERE\n");
     //printf("stack:%d %d %d %d %d\n",flag_A,stack_a[flag_A].f,stack_a[flag_A].x,stack_a[flag_A].y,stack_a[flag_A].dir);
     if(!A_table[RAT_A.f][RAT_A.x][RAT_A.y]) {
         stack_a[flag_A].dir = 0;
@@ -108,8 +107,6 @@ void ARAT_RUN() {
         RAT_A.f = stack_a[flag_A].f;
         RAT_A.x = stack_a[flag_A].x;
         RAT_A.y = stack_a[flag_A].y;
-        if(RAT_A.f == 2)printf("THERE\n");
-
     }
 }
 
@@ -132,7 +129,7 @@ void BRAT_RUN() {
         stack_b[flag_B++].dir = 1;
     } else if((maze[RAT_B.f][RAT_B.x][RAT_B.y+1]=='o' || maze[RAT_B.f][RAT_B.x][RAT_B.y+1]=='.') && stack_b[flag_B].dir < 2 && (flag_B==0 || stack_b[flag_B-1].dir!=3)) {
         RAT_B.y++;
-        stack_b[flag_A++].dir = 2;
+        stack_b[flag_B++].dir = 2;
     } else if((maze[RAT_B.f][RAT_B.x][RAT_B.y-1]=='o' || maze[RAT_B.f][RAT_B.x][RAT_B.y-1]=='.') && stack_b[flag_B].dir < 3 && (flag_B==0 || stack_b[flag_B-1].dir!=2)) {
         RAT_B.y--;
         stack_b[flag_B++].dir = 3;
@@ -172,11 +169,11 @@ int main() {
         ARAT_RUN();
         BRAT_RUN();
         WHERE_IS_RAT();
-        for(int i=0; i<=MAX_SIZE; i++) {
+        /*for(int i=0; i<=MAX_SIZE; i++) {
             for(int j=0; j<=MAX_SIZE; j++) {
                 printf("%d%c",A_table[RAT_A.f][i][j],j==MAX_SIZE ? '\n' : ' ');
             }
-        }
+        }*/
     }
 
     return 0;
