@@ -16,13 +16,43 @@ typedef struct {
     int f;
     int x;
     int y;
-    int flag;
-    stack stack[10000];
 }mouse;
 
-int main(){
-    int exit=0;
-    char maze[2][MAX_SIZE][MAX_SIZE];
+mouse RAT_A,RAT_B;
+stack stack_a[MAX_SIZE*MAX_SIZE+10],stack_b[MAX_SIZE*MAX_SIZE+10];
+
+void RAT_init(){
+    RAT_A.f = 0;
+    RAT_A.x = 1;
+    RAT_A.y = 1;    
+    RAT_B.f = 1;
+    RAT_B.x = 99;
+    RAT_B.y = 99;
+
+}
+
+int CHECK_A_IN_goal(){
+    if(RAT_A.f == 1 && RAT_A.x == 99 && RAT_A.y == 99)
+	return 1;
+    return 0;
+}
+
+int CHECK_B_IN_goal(){
+    if(RAT_B.f == 0 && RAT_B.x == 1 && RAT_B.y == 1)
+	return 1;
+    return 0;
+}
+
+int CHECK_A_AND_B_IS_TOGETHER(){
+    if(RAT_A.f == RAT_B.f && RAT_A.x == RAT_B.x && RAT_A.y == RAT_B.y)
+	return 1;
+    return 0;
+}
+
+
+
+char maze[2][MAX_SIZE][MAX_SIZE];
+void GET_INPUT(){
     int temp;
     //input
     for(int i=0; i<2; i++){
@@ -36,27 +66,30 @@ int main(){
 	    }
 	}
     }
-    //test for input is work.
-    /*for(int i=0; i<2; i++){
-      printf("%d\n",i+1);
-      for(int j=0; j<=100; j++)
-      puts(maze[i][j]);
-      }*/
+}
+
+void WHERE_IS_RAT(){
+    printf("A mouse is in (%d:%d:%d)\nB mouse is in (%d:%d:%d)\n",A.floor,A.x,A.y,B.floor,B.x,B.y);
+}
+
+int main(){
+    GET_INPUT();
+    RAT_init();
     while(1){
-	if(A.floor == 1 && A.x == 99 && A.y == 99){
+	if(CHECK_A_IN_goal()){
 	    printf("A mouse have arrived goal.\n");
 	    break;
 	}
-	if(B.floor == 0 && B.x == 1 && B.y == 1){
+	if(CHECK_B_IN_goal()){
 	    printf("B mouse have arrived goal.\n");
 	    break;
 	}
-	if(A.floor == B.floor && A.x == B.x && A.y == B.y){
+	if(CHECK_A_AND_B_IS_TOGETHER()){
 	    printf("A mouse and B mouse is together.\n");
 	    break;
 	}
 	
-	printf("A mouse is in (%d:%d:%d)\nB mouse is in (%d:%d:%d)\n",A.floor,A.x,A.y,B.floor,B.x,B.y);
+    WHERE_IS_RAT();
     }
     return 0;
 
