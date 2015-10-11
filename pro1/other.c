@@ -115,7 +115,7 @@ int main()
     stackA[posA++] = ratA;
     stackB[posB++] = ratB;
 
-    bool visitedA[2][MAZE_ROW][MAZE_COL], visitedB[2][MAZE_ROW][MAZE_COL];
+    int visitedA[2][MAZE_ROW][MAZE_COL], visitedB[2][MAZE_ROW][MAZE_COL];
     memset(visitedA, 0, sizeof(visitedA));
     memset(visitedB, 0, sizeof(visitedB));
 
@@ -133,12 +133,12 @@ int main()
         // printf("Walk Mouse A\n");
         while (posA != 0) {
             curr = stackA[posA - 1];
-            visitedA[curr.f][curr.x][curr.y] = true;
             // printf("curr -> %d %d %d %d\n", curr.f, curr.x, curr.y, curr.next_dir);
 
             bool has_next_step = false;
             for (int i = curr.next_dir; i < 4; i++) {
                 // printf("Trying %d dirA\n", i);
+            visitedA[curr.f][curr.x][curr.y] = true;
                 State tmp = curr;
                 tmp.x = curr.x + dirA[i][0];
                 tmp.y = curr.y + dirA[i][1];
