@@ -240,6 +240,12 @@ int main()
                    stackB[posB - 1].y);
         }
     }
-
+    /*for(int i=0; i<2; i++){
+      for(int j=0; j<=100; j++){
+        for(int k=0; k<=100; k++){
+          printf("%d%c",visitedA[i][j][k],k==100 ? '\n' : ' ');
+        }
+      }
+    }*/
     return 0;
 }
