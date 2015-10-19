@@ -60,7 +60,6 @@ int  B_table[2][MAX_SIZE][MAX_SIZE];
 
 void GET_INPUT() {
     int temp;
-    //input
     for(int i=0; i<2; i++) {
 	scanf("%d\n",&temp);
 	for(int j=0; j<=MAX_SIZE; j++) {
@@ -80,7 +79,6 @@ void ARAT_RUN() {
     stack_a[flag_A].f = RAT_A.f;
     stack_a[flag_A].x = RAT_A.x;
     stack_a[flag_A].y = RAT_A.y;
-    //printf("stack:%d %d %d %d %d\n",flag_A,stack_a[flag_A].f,stack_a[flag_A].x,stack_a[flag_A].y,stack_a[flag_A].dir);
     stack_a[flag_A].dir = 0;
     if(!A_table[RAT_A.f][RAT_A.x][RAT_A.y])
 	A_table[RAT_A.f][RAT_A.x][RAT_A.y] = 1;
@@ -117,7 +115,6 @@ void BRAT_RUN() {
     stack_b[flag_B].f = RAT_B.f;
     stack_b[flag_B].x = RAT_B.x;
     stack_b[flag_B].y = RAT_B.y;
-    //printf("stack:%d %d %d %d %d\n",flag_A,stack_a[flag_A].f,stack_a[flag_A].x,stack_a[flag_A].y,stack_a[flag_A].dir);
     if(!B_table[RAT_B.f][RAT_B.x][RAT_B.y])
 	B_table[RAT_B.f][RAT_B.x][RAT_B.y] = 1;
     else
@@ -186,14 +183,6 @@ int main() {
 	}
 	WHERE_IS_RAT();
     }
-    /*for(int k = 0; k<2; k++) {
-      for(int i=0; i<=MAX_SIZE; i++) {
-      for(int j=0; j<=MAX_SIZE; j++) {
-      printf("%d%c",A_table[k][i][j],j==MAX_SIZE ? '\n' : ' ');
-      }
-      }
-      }*/
-
     return 0;
 
 }

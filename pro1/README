@@ -1,0 +1,48 @@
+INTRODUCTION
+
+This is a story about two rats in the maze which has two floor.
+
+FILE
+
+    main.c
+
+	Just like its name.
+    
+    1_mazes.txt
+    2_mazes.txt
+    3_mazes.txt
+
+	They are data of maze.
+
+	    In the maze,
+
+		"X" = wall
+		"." = the way rat can go
+		"o" = the stair between two floors
+
+    1ans.txt
+    2ans.txt
+    3ans.txt
+	
+	They are answer from TA.
+
+    
+Compile
+
+    You should use gcc -std=c99 to compile.
+
+	gcc -std=c99 -o a.out main.c
+
+    Or you can Makefile in file.
+
+	make
+
+    Two way all generate the file named "a.out".
+
+RUN
+
+    Run a.out and enjoy.
+
+
+
+
