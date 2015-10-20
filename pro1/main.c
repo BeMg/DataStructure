@@ -161,6 +161,8 @@ void PUTS_INPUT() {
 }
 
 int main() {
+    freopen("maze.txt", "r", stdin);
+    freopen("result.txt", "w", stdout);
     GET_INPUT();
     RAT_init();
     PUTS_INPUT();
