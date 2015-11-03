@@ -77,13 +77,36 @@ void delete(Node **root ,int k){
 int main(){
     Node *root;
     root = NULL;
-    insert(&root,20);
-    insert(&root,15);
-    insert(&root,10);
-    insert(&root,12);
-    insert(&root,25);
-    insert(&root,22);
-    if(!(search(root,10)))
-	printf("YA!\n");
+    while(1){
+	printf("(I)nsert\n(S)earch\n(D)elete\n");
+	char input;
+	int k;
+	scanf("%c",&input);
+	if(input=='I' || input=='i'){
+	    printf("Please enter number you want to insert:");
+	    scanf("%d",&k);
+	    if(!(search(root,k)))
+		insert(&root,k);
+	    else
+		printf("Error.The number is already in tree.\n");
+	}
+	else if(input=='S' || input=='s'){
+	    printf("Please enter number you want to search:");
+	    scanf("%d",&k);
+	    if((search(root,k)))
+		printf("The number is in the tree.\n");
+	    else
+		printf("The number is not in the tree.\n");
+	}
+	else if(input=='D' || input=='d'){
+	    printf("Please enter number you want to delete:");
+	    scanf("%d",&k);
+	    if((search(root,k)))
+		delete(&root,k);
+	    else
+		printf("The number is not in the tree.\n");
+	}
+	getchar();
+    }
     return 0;
 }
