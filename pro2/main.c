@@ -52,7 +52,27 @@ void insert(Node **root, int k){
     }
 }
 
-
+void delete(Node **root ,int k){
+    Node *temp = search(*root,k);
+    if(!(temp->left) && !(temp->right)){
+	temp = NULL;
+    }else if((temp->left) && (temp->right)){
+	Node *ptr = temp->right;
+	while(1){
+	    if(!(ptr->left)){
+		temp = ptr;
+		ptr = ptr->right;
+		break;
+	    }
+	    ptr = ptr->left;	
+	}
+    }else{
+	if((temp->right))
+	    temp = temp->right;
+	else
+	    temp = temp->left;
+    }
+}
 
 int main(){
     Node *root;
