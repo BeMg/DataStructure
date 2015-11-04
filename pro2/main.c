@@ -9,119 +9,49 @@ struct node {
 
 typedef struct node Node;
 
-Node* search(Node *root , int k){
-    if(!root) return NULL;
-    if(root->data == k) return root;
-    if(root->data < k)
-	return search(root->left,k);
-    return search(root->right,k);
-}
 
-
-Node* search_terminal(Node *root , int k){
-    while(root){
-	if(k == root->data) return NULL;
-	if(k < root->data){
-	    if(!(root->left))
-		return root;
-	    root = root->left;
-	}else{ 
-	    if(!(root->right))
-		return root;
-	    root = root->right;
-	}
-    }
+Node* search(Node *root, int k){
+   
     return NULL;
 }
 
-Node* insert(Node *root, int k){
-    Node *ptr = (Node*) malloc(sizeof(Node)),*temp = search_terminal(root,k);
-    if(temp || !(root)){
-	ptr->data = k;
-	ptr->right = ptr->left = NULL;
-	if(root)
-	    if(k > ptr->data)
+Node* insert(Node* root, int k){
+    Node *ptr = (Node*) malloc (sizeof(Node));
+    ptr->data = k;
+    ptr->right = ptr->left = NULL;
+    if(root==NULL){
+	root = ptr;
+    }else{
+	Node *temp = root;
+	if(temp->data > k){
+	    if(temp->left==NULL)
+		temp->left = ptr;
+	    else
+		temp = temp ->left;
+	}else
+	    if(temp->right==NULL)
 		temp->right = ptr;
 	    else
-		temp->left = ptr;
-	else
-	    root = ptr;
-    }
-    else{
-	printf("Error.The number is already in tree.\n");
+		temp = temp->right;
     }
     return root;
 }
 
-void delete(Node *root ,int k){
-    Node *temp = search(root,k);
-    if(!(temp->left) && !(temp->right)){
-	temp = NULL;
-    }else if((temp->left) && (temp->right)){
-	Node *ptr = temp->right;
-	while(1){
-	    if(!(ptr->left)){
-		temp = ptr;
-		ptr = ptr->right;
-		break;
-	    }
-	    ptr = ptr->left;	
-	}
-    }else{
-	if((temp->right))
-	    temp = temp->right;
-	else
-	    temp = temp->left;
-    }
-}
-
 void infixorder(Node *root){
-    if(root!=NULL){
-	return infixorder(root->right);
-	printf("%d", (int) (root->data));
-	return infixorder(root->left);
+    if(root){
+	infixorder(root->left);
+	printf("%d",root->data);
+	infixorder(root->right);
     }
-    return ;
 }
-
 
 int main(){
-    Node *root;
+    Node* root;
     root = NULL;
-    while(1){
-	printf("(I)nsert\n(S)earch\n(D)elete\n(F)ixorde\n");
-	char input;
-	int k;
-	scanf("%c",&input);
-	if(input=='I' || input=='i'){
-	    printf("Please enter number you want to insert:");
-	    scanf("%d",&k);
-	    if(!(search(root,k)))
-		root = (Node*) insert(root,k);
-	    else
-		printf("Error.The number is already in tree.\n");
-	}
-	else if(input=='S' || input=='s'){
-	    printf("Please enter number you want to search:");
-	    scanf("%d",&k);
-	    if((search(root,k)))
-		printf("The number is in the tree.\n");
-	    else
-		printf("The number is not in the tree.\n");
-	}
-	else if(input=='D' || input=='d'){
-	    printf("Please enter number you want to delete:");
-	    scanf("%d",&k);
-	    if((search(root,k)))
-		delete(root,k);
-	    else
-		printf("The number is not in the tree.\n");
-	}
-	else if(input=='F' || input=='f'){
-	    infixorder(root);
-	    puts("");
-	}
-	getchar();
-    }
+    root = insert(root,5);
+    root = insert(root,10);    
+    root = insert(root,3);
+    infixorder(root);
+
     return 0;
 }
