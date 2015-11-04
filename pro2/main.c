@@ -41,7 +41,7 @@ Node* insert(Node* root, int k){
     return root;
 }
 
-Node* delete(Node* root, int k){
+Node* Delete(Node* root, int k){
     Node* delete = root;
     while(delete->data != k){
 	if(delete == NULL){
@@ -53,14 +53,16 @@ Node* delete(Node* root, int k){
 	else
 	    delete = delete->right;
     }
+    printf("%d YA!\n",delete->data);
     if(!(delete->right) && !(delete->left)){
 	delete = NULL;
+	printf("TTA\n");
     }else if((delete->right) && (delete->left)){
 	Node* temp = delete->right;
 	while(1){
 	    if(temp->left==NULL){
 		int swap = temp->data;
-		root = delete(root,temp->data);
+		root = Delete(root,temp->data);
 		delete->data = swap;
 		break;
 	    }
@@ -70,13 +72,13 @@ Node* delete(Node* root, int k){
 	if(delete->right){
 	    Node* temp = delete->right;
 	    int swap = temp->data;
-	    root = delete(root,temp->data);
+	    root = Delete(root,temp->data);
 	    delete->data = swap;
 	}
 	else{
 	    Node* temp = delete->left;
 	    int swap = temp->data;
-	    root = delete(root,temp->data);
+	    root = Delete(root,temp->data);
 	    delete->data = swap;
 	}
     }
@@ -98,7 +100,9 @@ int main(){
     root = insert(root,10);    
     root = insert(root,3);
     infixorder(root);
-    
+    puts("");
+    root = Delete(root,3);
+    infixorder(root);
 
     return 0;
 }
