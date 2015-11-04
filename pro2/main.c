@@ -136,7 +136,7 @@ void implement_bst(){
     root = NULL;
     int k;
     while(1){
-    printf("(S)earch\n(I)nsert\n(D)elete\n(P)rintorder\n(E)xit\n");
+	printf("(S)earch\n(I)nsert\n(D)elete\n(P)rintorder\n(E)xit\n");
 	char input[10];
 	fgets(input,10,stdin);
 	int len = strlen(input);
@@ -179,17 +179,48 @@ void implement_bst(){
 	    continue;
 	}else if(input[0]=='E' || input[0]=='e'){
 	    return ;
-	}else
+	}else{
 	    printf("Not such instruction.\n");
+	    continue;
+	}
 	getchar();
+    }
+}
+
+void Treasure(){
+    Node* root;
+    root = NULL;
+    printf("(O)pen file\n(S)et maze detail\n");
+    char input[10];
+    fgets(input,10,stdin);
+    int len = strlen(input);
+    if (input[len-1] == '\n') {
+	input[len-1] = '\0';
+	len--;
+    }
+    if(input[0]=='O' || input[0]=='o'){
+	printf("Please enter your file name:");
+	char a[100];
+	fgets(a,100,stdin);
+	len = strlen(input);
+	if (input[len-1] == '\n') {
+	    input[len-1] = '\0';
+	    len--;
+	}
+	freopen(a,"r",stdin);
+	int temp;
+	while(scanf("%d",&temp)!=EOF){
+	    root = insert(root,temp);
+	}
+    }else if(input[0]=='S' || input[0]=='s'){
+	    
     }
 
 }
 
-
 int main(){
     while(1){
-	printf("(I)mplement\n(T)reasure Hunter\n");
+	printf("(I)mplement\n(T)reasure Hunter\n(E)xit\n");
 	char input[10];
 	fgets(input,10,stdin);
 	int len = strlen(input);
@@ -200,9 +231,14 @@ int main(){
 	if(input[0]=='I' || input[0]=='i'){
 	    implement_bst();
 	}else if(input[0]=='T' || input[0]=='t'){
-	
-	}else
+
+	}else if(input[0]=='E' || input[0]=='e'){
+	    break; 
+	}else{
 	    printf("No such instruction\n");
+	    continue;
+	}
+	getchar();
     }
     return 0;
 }
