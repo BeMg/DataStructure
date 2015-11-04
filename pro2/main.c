@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 struct node {
     int data;
     struct node *left;
@@ -11,7 +11,12 @@ typedef struct node Node;
 
 
 Node* search(Node *root, int k){
-
+    if(!root)return NULL;
+    if(root->data == k)return root;
+    if(root->data > k)
+	search(root->left,k);
+    else
+	search(root->right,k);
     return NULL;
 }
 
@@ -43,9 +48,9 @@ Node* insert(Node* root, int k){
 
 Node* Delete(Node* root, int k){
     Node* delete = root;
-    Node* pre = root;
+    Node* pre_delete = root;
     while(delete->data != k){
-	pre = delete;
+	pre_delete = delete;
 	if(delete == NULL){
 	    printf("The number %d is not in tree.\n",k);
 	    return NULL;
@@ -55,11 +60,36 @@ Node* Delete(Node* root, int k){
 	else
 	    delete = delete->right;
     }
+    Node *temp = delete;
     if(delete->right)
-	pre->left = delete->right;
-    else
-	pre->left = NULL;
-    free(delete);
+	temp = delete->right;
+    Node *pre_temp = delete;
+    while(1){
+	if(temp->left){
+	    pre_temp = temp;
+	    temp = temp->left;
+	}else
+	    break;
+    }
+    if(!(delete->right) && !(delete->left)){
+	if(pre_delete->right == delete)
+	    pre_delete->right = NULL;
+	else if(pre_delete->left == delete)
+	    pre_delete->left = NULL;
+	else if(pre_delete == delete)
+	    root = NULL;
+	free(delete);
+    }else if(!(delete->right)){
+	if(pre_delete->right == delete)
+	    pre_delete->right = delete->left;
+	else if(pre_delete->left == delete)
+	    pre_delete->left = delete->left;
+	free(delete);	
+    }else{
+	delete->data = temp->data;
+	pre_temp->left = temp->right;
+	free(temp);
+    }
     return root;
 }
 
@@ -88,8 +118,43 @@ void levelorder(Node* root){
     }
 }
 
+void UIinit(){
+    printf("(S)earch\n(I)nsert\n(D)elete\n(P)rintorder\n");
+}
+
 int main(){
     Node* root;
     root = NULL;
+    root = insert(root,1);
+    root = insert(root,2);
+    //root = insert(root,5);
+    infixorder(root);
+    printf("\n");
+    root = Delete(root,1);
+    infixorder(root);
+    printf("\n");
+    while(1){
+	UIinit();
+	char input[10];
+	fgets(input,10,stdin);
+	int len = strlen(input);
+	if (input[len-1] == '\n') {
+	    input[len-1] = '\0';
+	    len--;
+	}
+	if(input[0] == 'S' || input[0] == 's'){
+	    	
+	}
+	else if(input[0] == 'I' || input[0] == 'i'){
+	
+	}
+	else if(input[0] == 'D' || input[0] == 'd'){
+	
+	}
+	else if(input[0] == 'P' || input[0] == 'p'){
+	
+	}else
+	    printf("Not such action.\n");
+    }
     return 0;
 }
