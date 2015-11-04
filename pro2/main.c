@@ -14,9 +14,9 @@ Node* search(Node *root, int k){
     if(!root)return NULL;
     if(root->data == k)return root;
     if(root->data > k)
-	search(root->left,k);
+	return search(root->left,k);
     else
-	search(root->right,k);
+	return search(root->right,k);
     return NULL;
 }
 
@@ -214,6 +214,8 @@ void hunter(Node *root,int key,int treasure){
 	else
 	    temp = temp->right;
     }
+    //for(int i=0; i<aflag; i++)
+    //	printf("%d%c",a[i],i==aflag-1 ? '\n' : ' ');
     temp = root;
     while(1){
 	if(!temp){
@@ -221,26 +223,32 @@ void hunter(Node *root,int key,int treasure){
 	    return ;
 	}
 	b[bflag++] = temp->data;
+	if(temp->data == treasure)break;
 	if(have_eight(temp->data))
 	    root = Delete(root,temp->data);
-	if(temp->data == key)break;
-	if(temp->data > key)
+	if(temp->data == treasure){
+	    b[bflag++] = temp->data;
+	    break;
+	}
+	if(temp->data > treasure)
 	    temp = temp->left;
 	else
 	    temp = temp->right;
     }
+    //for(int i=0; i<bflag; i++)
+    //	printf("%d%c",b[i],i==aflag-1 ? '\n' : ' ');
     int flag = 0;
-    for(int i=0; i<=aflag; i++){
+    for(int i=0; i<aflag; i++){
 	if(a[i]!=b[i] && !flag){
 	    flag = i;
 	}
 	printf("%d -> ",a[i]);
     }
-    for(int i=aflag-1; i>=flag-1; i--){
+    for(int i=aflag-2; i>=flag-1; i--){
 	printf("%d -> ",a[i]);
     }
-    for(int i=flag; i<=bflag; i++){
-	printf("%d%s",b[i],i == bflag ? "\n" : " -> " );
+    for(int i=flag; i<bflag; i++){
+	printf("%d%s",b[i],i == bflag-1 ? "\n" : " -> " );
     }
 }
 
@@ -276,6 +284,8 @@ void Treasure(){
 		root = insert(root,temp);
 	    }
 	    fclose(file);
+	    //levelorder(root);
+	    //printf("\n");
 	}else if(input[0]=='S' || input[0]=='s'){
 	    int key , treasure;
 	    printf("Enter key:");
@@ -283,6 +293,7 @@ void Treasure(){
 	    printf("Enter treasure:");
 	    scanf("%d",&treasure);
 	    hunter(root,key,treasure);
+	    getchar();
 	}
     }
 }
