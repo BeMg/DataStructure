@@ -187,35 +187,104 @@ void implement_bst(){
     }
 }
 
+int have_eight(int k){
+    while(k!=0){
+	if(k%10==8)return 1;
+	k/=10;
+    }
+    return 0;
+}
+
+void hunter(Node *root,int key,int treasure){
+    int a[1024];
+    int b[1024];
+    int aflag=0,bflag=0;
+    Node *temp = root;
+    while(1){
+	if(!temp){
+	    printf("Key not found.\n");
+	    return ;
+	}
+	a[aflag++] = temp->data;
+	if(have_eight(temp->data))
+	    root = Delete(root,temp->data);
+	if(temp->data == key)break;
+	if(temp->data > key)
+	    temp = temp->left;
+	else
+	    temp = temp->right;
+    }
+    temp = root;
+    while(1){
+	if(!temp){
+	    printf("Treasure not found.\n");
+	    return ;
+	}
+	b[bflag++] = temp->data;
+	if(have_eight(temp->data))
+	    root = Delete(root,temp->data);
+	if(temp->data == key)break;
+	if(temp->data > key)
+	    temp = temp->left;
+	else
+	    temp = temp->right;
+    }
+    int flag = 0;
+    for(int i=0; i<=aflag; i++){
+	if(a[i]!=b[i] && !flag){
+	    flag = i;
+	}
+	printf("%d -> ",a[i]);
+    }
+    for(int i=aflag-1; i>=flag-1; i--){
+	printf("%d -> ",a[i]);
+    }
+    for(int i=flag; i<=bflag; i++){
+	printf("%d%s",b[i],i == bflag ? "\n" : " -> " );
+    }
+}
+
 void Treasure(){
     Node* root;
     root = NULL;
-    printf("(O)pen file\n(S)et maze detail\n");
-    char input[10];
-    fgets(input,10,stdin);
-    int len = strlen(input);
-    if (input[len-1] == '\n') {
-	input[len-1] = '\0';
-	len--;
-    }
-    if(input[0]=='O' || input[0]=='o'){
-	printf("Please enter your file name:");
-	char a[100];
-	fgets(a,100,stdin);
-	len = strlen(input);
+    while(1){
+	printf("(O)pen file\n(S)et maze detail\n");
+	char input[10];
+	fgets(input,10,stdin);
+	int len = strlen(input);
 	if (input[len-1] == '\n') {
 	    input[len-1] = '\0';
 	    len--;
 	}
-	freopen(a,"r",stdin);
-	int temp;
-	while(scanf("%d",&temp)!=EOF){
-	    root = insert(root,temp);
+	if(input[0]=='O' || input[0]=='o'){
+	    printf("Please enter your file name:");
+	    char a[100];
+	    fgets(a,100,stdin);
+	    len = strlen(a);
+	    if (a[len-1] == '\n') {
+		a[len-1] = '\0';
+		len--;
+	    }
+	    puts(a);
+	    FILE * file = fopen(a,"r");
+	    if(!(file)){
+		printf("Not such file.\n"); 
+		continue;
+	    }
+	    int temp;
+	    while(fscanf(file,"%d",&temp)!=EOF){
+		root = insert(root,temp);
+	    }
+	    fclose(file);
+	}else if(input[0]=='S' || input[0]=='s'){
+	    int key , treasure;
+	    printf("Enter key:");
+	    scanf("%d",&key);
+	    printf("Enter treasure:");
+	    scanf("%d",&treasure);
+	    hunter(root,key,treasure);
 	}
-    }else if(input[0]=='S' || input[0]=='s'){
-	    
     }
-
 }
 
 int main(){
@@ -231,14 +300,13 @@ int main(){
 	if(input[0]=='I' || input[0]=='i'){
 	    implement_bst();
 	}else if(input[0]=='T' || input[0]=='t'){
-
+	    Treasure();
 	}else if(input[0]=='E' || input[0]=='e'){
 	    break; 
 	}else{
 	    printf("No such instruction\n");
 	    continue;
 	}
-	getchar();
     }
     return 0;
 }
