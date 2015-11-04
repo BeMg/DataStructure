@@ -130,19 +130,13 @@ void levelorder(Node* root){
     }
 }
 
-void UIinit(){
-    printf("(S)earch\n(I)nsert\n(D)elete\n(P)rintorder\n");
-}
 
-
-
-
-int main(){
+void implement_bst(){
     Node* root;
     root = NULL;
     int k;
     while(1){
-	UIinit();
+    printf("(S)earch\n(I)nsert\n(D)elete\n(P)rintorder\n(E)xit\n");
 	char input[10];
 	fgets(input,10,stdin);
 	int len = strlen(input);
@@ -183,9 +177,32 @@ int main(){
 	    levelorder(root);
 	    printf("\n");
 	    continue;
+	}else if(input[0]=='E' || input[0]=='e'){
+	    return ;
 	}else
-	    printf("Not such action.\n");
+	    printf("Not such instruction.\n");
 	getchar();
+    }
+
+}
+
+
+int main(){
+    while(1){
+	printf("(I)mplement\n(T)reasure Hunter\n");
+	char input[10];
+	fgets(input,10,stdin);
+	int len = strlen(input);
+	if (input[len-1] == '\n') {
+	    input[len-1] = '\0';
+	    len--;
+	}
+	if(input[0]=='I' || input[0]=='i'){
+	    implement_bst();
+	}else if(input[0]=='T' || input[0]=='t'){
+	
+	}else
+	    printf("No such instruction\n");
     }
     return 0;
 }
