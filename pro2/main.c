@@ -43,7 +43,9 @@ Node* insert(Node* root, int k){
 
 Node* Delete(Node* root, int k){
     Node* delete = root;
+    Node* pre = root;
     while(delete->data != k){
+	pre = delete;
 	if(delete == NULL){
 	    printf("The number %d is not in tree.\n",k);
 	    return NULL;
@@ -53,36 +55,12 @@ Node* Delete(Node* root, int k){
 	else
 	    delete = delete->right;
     }
-    printf("%d YA!\n",delete->data);
-    if(!(delete->right) && !(delete->left)){
-	delete = NULL;
-	printf("TTA\n");
-    }else if((delete->right) && (delete->left)){
-	Node* temp = delete->right;
-	while(1){
-	    if(temp->left==NULL){
-		int swap = temp->data;
-		root = Delete(root,temp->data);
-		delete->data = swap;
-		break;
-	    }
-	    temp = temp->left;
-	}
-    }else{
-	if(delete->right){
-	    Node* temp = delete->right;
-	    int swap = temp->data;
-	    root = Delete(root,temp->data);
-	    delete->data = swap;
-	}
-	else{
-	    Node* temp = delete->left;
-	    int swap = temp->data;
-	    root = Delete(root,temp->data);
-	    delete->data = swap;
-	}
-    }
-   return root;
+    if(delete->right)
+	pre->left = delete->right;
+    else
+	pre->left = NULL;
+    free(delete);
+    return root;
 }
 
 void infixorder(Node *root){
@@ -91,6 +69,10 @@ void infixorder(Node *root){
 	printf("%d",root->data);
 	infixorder(root->right);
     }
+}
+
+void levelorder(Node* root){
+    
 }
 
 int main(){
@@ -103,6 +85,6 @@ int main(){
     puts("");
     root = Delete(root,3);
     infixorder(root);
-
+    puts("");
     return 0;
 }
