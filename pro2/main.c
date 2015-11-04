@@ -91,16 +91,5 @@ void levelorder(Node* root){
 int main(){
     Node* root;
     root = NULL;
-    root = insert(root,5);
-    root = insert(root,10);    
-    root = insert(root,3);
-    infixorder(root);
-    puts("");
-    root = Delete(root,3);
-    infixorder(root);
-    puts("");
-    insert(root,3);
-    levelorder(root);
-    puts("");
     return 0;
 }
