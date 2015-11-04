@@ -72,7 +72,20 @@ void infixorder(Node *root){
 }
 
 void levelorder(Node* root){
-    
+    Node* treequeue [1024];
+    int front = 0;
+    int rear = 0;
+    treequeue [rear++] = root;
+    while(1){
+	if(front == rear)
+	    break;
+	Node *curr = treequeue[front++];
+	printf("%d",curr->data);
+	if(curr->left)
+	    treequeue[rear++] = curr->left;
+	if(curr->right)
+	    treequeue[rear++] = curr->right;
+    }
 }
 
 int main(){
@@ -85,6 +98,9 @@ int main(){
     puts("");
     root = Delete(root,3);
     infixorder(root);
+    puts("");
+    insert(root,3);
+    levelorder(root);
     puts("");
     return 0;
 }
