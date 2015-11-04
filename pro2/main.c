@@ -134,20 +134,13 @@ void UIinit(){
     printf("(S)earch\n(I)nsert\n(D)elete\n(P)rintorder\n");
 }
 
+
+
+
 int main(){
     Node* root;
     root = NULL;
-    root = insert(root,30);
-    root = insert(root,5);
-    root = insert(root,2);
-    root = insert(root,40);
-    root = insert(root,35);
-    root = insert(root,80);
-    infixorder(root);
-    printf("\n");
-    root = Delete(root,30);
-    infixorder(root);
-    printf("\n");
+    int k;
     while(1){
 	UIinit();
 	char input[10];
@@ -158,18 +151,41 @@ int main(){
 	    len--;
 	}
 	if(input[0] == 'S' || input[0] == 's'){
-
+	    printf("Enter number want to search:");
+	    scanf("%d",&k);
+	    if(search(root,k))
+		printf("The number is in the tree.\n");
+	    else
+		printf("The number is not in the tree.\n");
 	}
 	else if(input[0] == 'I' || input[0] == 'i'){
-
+	    printf("Enter number want to insert:");
+	    scanf("%d",&k);
+	    if(search(root,k))
+		printf("Error.The number is already in the tree.\n");
+	    else{
+		root = insert(root,k);
+	    }
 	}
 	else if(input[0] == 'D' || input[0] == 'd'){
-
+	    printf("Enter number want to delete:");
+	    scanf("%d",&k);
+	    if(search(root,k))
+		root = Delete(root,k);
+	    else{
+		printf("Error.The number is not in the tree.\n");
+	    }   
 	}
 	else if(input[0] == 'P' || input[0] == 'p'){
-
+	    printf("Infixorder:");
+	    infixorder(root);
+	    printf("\nLevelorder:");
+	    levelorder(root);
+	    printf("\n");
+	    continue;
 	}else
 	    printf("Not such action.\n");
+	getchar();
     }
     return 0;
 }
