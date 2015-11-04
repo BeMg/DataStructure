@@ -35,12 +35,13 @@ Node* insert(Node* root, int k){
 		    break;
 		}
 		temp = temp ->left;
-	    }else
+	    }else{
 		if(temp->right==NULL){
 		    temp->right = ptr;
 		    break;
 		}
-	    temp = temp->right;
+		temp = temp->right;
+	    }
 	}
     }
     return root;
@@ -64,10 +65,12 @@ Node* Delete(Node* root, int k){
     if(delete->right)
 	temp = delete->right;
     Node *pre_temp = delete;
+    int flag = 1;
     while(1){
 	if(temp->left){
 	    pre_temp = temp;
 	    temp = temp->left;
+	    flag = 0;
 	}else
 	    break;
     }
@@ -84,10 +87,19 @@ Node* Delete(Node* root, int k){
 	    pre_delete->right = delete->left;
 	else if(pre_delete->left == delete)
 	    pre_delete->left = delete->left;
+	else if(pre_delete == delete){
+	    root = root->left;
+	}
 	free(delete);	
     }else{
 	delete->data = temp->data;
-	pre_temp->left = temp->right;
+	if(flag){
+	    pre_temp->right = NULL;
+	}    
+	else if(temp->right)
+	    pre_temp->left = temp->right;
+	else
+	    pre_temp->left = NULL;
 	free(temp);
     }
     return root;
@@ -96,7 +108,7 @@ Node* Delete(Node* root, int k){
 void infixorder(Node *root){
     if(root){
 	infixorder(root->left);
-	printf("%d",root->data);
+	printf("%d ",root->data);
 	infixorder(root->right);
     }
 }
@@ -110,7 +122,7 @@ void levelorder(Node* root){
 	if(front == rear)
 	    break;
 	Node *curr = treequeue[front++];
-	printf("%d",curr->data);
+	printf("%d ",curr->data);
 	if(curr->left)
 	    treequeue[rear++] = curr->left;
 	if(curr->right)
@@ -125,12 +137,15 @@ void UIinit(){
 int main(){
     Node* root;
     root = NULL;
-    root = insert(root,1);
+    root = insert(root,30);
+    root = insert(root,5);
     root = insert(root,2);
-    //root = insert(root,5);
+    root = insert(root,40);
+    root = insert(root,35);
+    root = insert(root,80);
     infixorder(root);
     printf("\n");
-    root = Delete(root,1);
+    root = Delete(root,30);
     infixorder(root);
     printf("\n");
     while(1){
@@ -143,16 +158,16 @@ int main(){
 	    len--;
 	}
 	if(input[0] == 'S' || input[0] == 's'){
-	    	
+
 	}
 	else if(input[0] == 'I' || input[0] == 'i'){
-	
+
 	}
 	else if(input[0] == 'D' || input[0] == 'd'){
-	
+
 	}
 	else if(input[0] == 'P' || input[0] == 'p'){
-	
+
 	}else
 	    printf("Not such action.\n");
     }
