@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+/*Set the tree struct have data leftchild and rightchild. Fit the binary tree define.*/
 struct node {
     int data;
     struct node *left;
@@ -9,18 +10,22 @@ struct node {
 
 typedef struct node Node;
 
+//Table to check for not explosion twice.
 int table[100000];
 
+/*Search use recusive. If not find return NULL, or return where is it.*/
 Node* search(Node *root, int k){
     if(!root)return NULL;
     if(root->data == k)return root;
     if(root->data > k)
-	return search(root->left,k);
+    return search(root->left,k);
     else
 	return search(root->right,k);
     return NULL;
 }
 
+/*Insert have to two step.First, like search to find number should in. In my way, I let recusive until find root is NULL.
+Seconed, put it in.*/
 Node* insert(Node* root, int k){
     Node *ptr = (Node*) malloc (sizeof(Node));
     ptr->data = k;
@@ -48,9 +53,27 @@ Node* insert(Node* root, int k){
     return root;
 }
 
+/*Delete have such much case. We need to do by case.
+If the number is not in tree return error.
+Or let delete is pointer which number need to delete.
+Here is we need to by case to replace the number which been delete.
+1.Delete have no child
+    (1)Just delete itself and nothing happened.
+    (2)Delete is root. Root assing NULL.
+2.Delete no have rightchild.
+    (1)Only leftchild.First leftchild Replace delete.
+3.Delete have two children.
+    (1)Find rightchild the smallest.
+We define temp is which will replace delete.
+The pointer temp is also use to replace the deletion whether if temp has right child or not.
+*/
+
 Node* Delete(Node* root, int k){
+    //delete is node we want to delete
     Node* delete = root;
+    //prestep of delete
     Node* pre_delete = root;
+    //find where delete is it
     while(delete->data != k){
 	pre_delete = delete;
 	if(delete == NULL){
@@ -62,11 +85,13 @@ Node* Delete(Node* root, int k){
 	else
 	    delete = delete->right;
     }
+    //temp replace delete
     Node *temp = delete;
     if(delete->right)
 	temp = delete->right;
     Node *pre_temp = delete;
     int flag = 1;
+    //find correct temp
     while(1){
 	if(temp->left){
 	    pre_temp = temp;
@@ -75,15 +100,19 @@ Node* Delete(Node* root, int k){
 	}else
 	    break;
     }
+    //Case 1 delete itself
     if(!(delete->right) && !(delete->left)){
 	if(pre_delete->right == delete)
 	    pre_delete->right = NULL;
 	else if(pre_delete->left == delete)
 	    pre_delete->left = NULL;
+    //When pre == curr delete is root
 	else if(pre_delete == delete)
 	    root = NULL;
 	free(delete);
+    //Case 2 no have rightchild
     }else if(!(delete->right)){
+    //Just replace by first leftchild
 	if(pre_delete->right == delete)
 	    pre_delete->right = delete->left;
 	else if(pre_delete->left == delete)
@@ -92,11 +121,17 @@ Node* Delete(Node* root, int k){
 	    root = root->left;
 	}
 	free(delete);
+    //Case 3 have rightchild
     }else{
 	delete->data = temp->data;
+    //temp no have leftchild
 	if(flag){
-	    pre_temp->right = NULL;
+        if(temp->right)
+            pre_temp->right = temp->right;
+        else
+	        pre_temp->right = NULL;
 	}
+    //if temp have right
 	else if(temp->right)
 	    pre_temp->left = temp->right;
 	else
@@ -319,6 +354,8 @@ void Treasure(){
 	    scanf("%d",&treasure);
 	    hunter(root,key,treasure);
 	    getchar();
+        free(root);
+        root = NULL;
 	}
 	//infixorder(root);
 	//printf("\n");
