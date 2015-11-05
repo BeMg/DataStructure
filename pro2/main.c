@@ -90,12 +90,12 @@ Node* Delete(Node* root, int k){
 	else if(pre_delete == delete){
 	    root = root->left;
 	}
-	free(delete);	
+	free(delete);
     }else{
 	delete->data = temp->data;
 	if(flag){
 	    pre_temp->right = NULL;
-	}    
+	}
 	else if(temp->right)
 	    pre_temp->left = temp->right;
 	else
@@ -168,7 +168,7 @@ void implement_bst(){
 		root = Delete(root,k);
 	    else{
 		printf("Error.The number is not in the tree.\n");
-	    }   
+	    }
 	}
 	else if(input[0] == 'P' || input[0] == 'p'){
 	    printf("Infixorder:");
@@ -206,8 +206,20 @@ void hunter(Node *root,int key,int treasure){
 	    return ;
 	}
 	a[aflag++] = temp->data;
-	if(have_eight(temp->data))
-	    root = Delete(root,temp->data);
+	if(have_eight(temp->data)){
+	    if(!(temp->left) && !(temp->right))
+		root = Delete(root,temp->data);
+	    else if((temp->left) && !(temp->right))
+		root = Delete(root,temp->left->data);
+	    else if(!(temp->left) && (temp->right))
+		root = Delete(root,temp->right->data);
+	    else{
+		if(temp->left->data > temp->right->data)
+		    root = Delete(root,temp->right->data);
+		else
+		    root = Delete(root,temp->left->data);
+	    }
+	}
 	if(temp->data == key)break;
 	if(temp->data > key)
 	    temp = temp->left;
@@ -223,13 +235,21 @@ void hunter(Node *root,int key,int treasure){
 	    return ;
 	}
 	b[bflag++] = temp->data;
-	if(temp->data == treasure)break;
-	if(have_eight(temp->data))
-	    root = Delete(root,temp->data);
-	if(temp->data == treasure){
-	    b[bflag++] = temp->data;
-	    break;
+	if(have_eight(temp->data)){
+	    if(!(temp->left) && !(temp->right))
+		root = Delete(root,temp->data);
+	    else if((temp->left) && !(temp->right))
+		root = Delete(root,temp->left->data);
+	    else if(!(temp->left) && (temp->right))
+		root = Delete(root,temp->right->data);
+	    else{
+		if(temp->left->data > temp->right->data)
+		    root = Delete(root,temp->right->data);
+		else
+		    root = Delete(root,temp->left->data);
+	    }
 	}
+	if(temp->data == treasure)break;
 	if(temp->data > treasure)
 	    temp = temp->left;
 	else
@@ -248,8 +268,9 @@ void hunter(Node *root,int key,int treasure){
 	printf("%d -> ",a[i]);
     }
     for(int i=flag; i<bflag; i++){
-	printf("%d%s",b[i],i == bflag-1 ? "\n" : " -> " );
+	printf("%d -> ",b[i]);
     }
+    printf("END\n");
 }
 
 void Treasure(){
@@ -276,7 +297,7 @@ void Treasure(){
 	    puts(a);
 	    FILE * file = fopen(a,"r");
 	    if(!(file)){
-		printf("Not such file.\n"); 
+		printf("Not such file.\n");
 		continue;
 	    }
 	    int temp;
@@ -295,6 +316,10 @@ void Treasure(){
 	    hunter(root,key,treasure);
 	    getchar();
 	}
+	//infixorder(root);
+	//printf("\n");
+	//levelorder(root);
+	//printf("\n");
     }
 }
 
@@ -313,7 +338,7 @@ int main(){
 	}else if(input[0]=='T' || input[0]=='t'){
 	    Treasure();
 	}else if(input[0]=='E' || input[0]=='e'){
-	    break; 
+	    break;
 	}else{
 	    printf("No such instruction\n");
 	    continue;
