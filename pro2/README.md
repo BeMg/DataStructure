@@ -24,7 +24,7 @@ Just `make`
 
 `a.out` is execution file.
 
-## Start meue
+## Start mene
 Program will print follow word.
 
 ```
@@ -34,7 +34,7 @@ Program will print follow word.
 ```
 Enter `I` or `T` or `E`, to continue.
 
-## Implement
+## Implementation
 
 If you enter `I` in meue, you will see follow word.
 
