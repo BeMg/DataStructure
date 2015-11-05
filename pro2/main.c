@@ -9,6 +9,7 @@ struct node {
 
 typedef struct node Node;
 
+int table[100000];
 
 Node* search(Node *root, int k){
     if(!root)return NULL;
@@ -198,6 +199,7 @@ int have_eight(int k){
 void hunter(Node *root,int key,int treasure){
     int a[1024];
     int b[1024];
+    memset(table,0,sizeof(table));
     int aflag=0,bflag=0;
     Node *temp = root;
     while(1){
@@ -206,7 +208,8 @@ void hunter(Node *root,int key,int treasure){
 	    return ;
 	}
 	a[aflag++] = temp->data;
-	if(have_eight(temp->data)){
+	if(have_eight(temp->data) && !table[temp->data]){
+        table[temp->data] = 1;
 	    if(!(temp->left) && !(temp->right))
 		root = Delete(root,temp->data);
 	    else if((temp->left) && !(temp->right))
@@ -235,7 +238,8 @@ void hunter(Node *root,int key,int treasure){
 	    return ;
 	}
 	b[bflag++] = temp->data;
-	if(have_eight(temp->data)){
+	if(have_eight(temp->data) && !table[temp->data]){
+        table[temp->data] = 1;
 	    if(!(temp->left) && !(temp->right))
 		root = Delete(root,temp->data);
 	    else if((temp->left) && !(temp->right))
