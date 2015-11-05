@@ -229,6 +229,10 @@ void implement_bst() {
             }
         }
         else if(input[0] == 'P' || input[0] == 'p') {
+            if(root==NULL){
+                printf("Error.No tree data.\n");
+                continue;
+            }
             printf("Infixorder:");
             infixorder(root);
             printf("\nLevelorder:");
