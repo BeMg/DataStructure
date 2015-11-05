@@ -235,6 +235,8 @@ void hunter(Node *root,int key,int treasure){
     int a[1024];
     int b[1024];
     memset(table,0,sizeof(table));
+    memset(a,0,sizeof(a));
+    memset(b,0,sizeof(b));
     int aflag=0,bflag=0;
     Node *temp = root;
     while(1){
@@ -294,8 +296,10 @@ void hunter(Node *root,int key,int treasure){
 	else
 	    temp = temp->right;
     }
-    //for(int i=0; i<bflag; i++)
-    //	printf("%d%c",b[i],i==aflag-1 ? '\n' : ' ');
+    for(int i=0; i<aflag; i++)
+        printf("%d%c",a[i],i==aflag-1 ? '\n' : ' ');
+    for(int i=0; i<bflag; i++)
+            printf("%d%c",b[i],i==bflag-1 ? '\n' : ' ');
     int flag = 0;
     for(int i=0; i<aflag; i++){
 	if(a[i]!=b[i] && !flag){
@@ -310,6 +314,14 @@ void hunter(Node *root,int key,int treasure){
 	printf("%d -> ",b[i]);
     }
     printf("END\n");
+}
+
+void Postorder_clear_tree(Node* root){
+    if(root){
+    Postorder_clear_tree(root->left);
+    Postorder_clear_tree(root->right);
+    free(root);
+    }
 }
 
 void Treasure(){
@@ -344,24 +356,24 @@ void Treasure(){
 		root = insert(root,temp);
 	    }
 	    fclose(file);
-	    //levelorder(root);
-	    //printf("\n");
 	}else if(input[0]=='S' || input[0]=='s'){
 	    int key , treasure;
+        if(root==NULL){
+            printf("No tree data.\n");
+            continue;
+        }
 	    printf("Enter key:");
 	    scanf("%d",&key);
 	    printf("Enter treasure:");
 	    scanf("%d",&treasure);
+        infixorder(root);
+        printf("\n");
 	    hunter(root,key,treasure);
-	    getchar();
-        free(root);
+        Postorder_clear_tree(root);
         root = NULL;
+	    getchar();
 	}
-	//infixorder(root);
-	//printf("\n");
-	//levelorder(root);
-	//printf("\n");
-    }
+}
 }
 
 int main(){
