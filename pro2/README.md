@@ -24,7 +24,7 @@ Just `make`
 
 `a.out` is execution file.
 
-## Start mene
+## Start menu
 Program will print follow word.
 
 ```
