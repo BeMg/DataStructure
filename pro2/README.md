@@ -3,8 +3,8 @@
 ## Introduction
 
 We have two tasks.
-1. implement a binary search tree use link.
-2. follow the describe make **treasure hunter**.
+1. implement a binary search tree using links.
+2. follow the description and make **treasure hunter**.
 
 ## Compile and run
 
@@ -22,10 +22,10 @@ clean:
 
 Just `make`
 
-`a.out` is execution file.
+`a.out` is the executable file.
 
-## Start meue
-Program will print follow word.
+## Start menu
+Program will print out following words.
 
 ```
 (I)mplement
@@ -34,9 +34,9 @@ Program will print follow word.
 ```
 Enter `I` or `T` or `E`, to continue.
 
-## Implement
+## Implementation
 
-If you enter `I` in meue, you will see follow word.
+If you enter `I` in the menu, you will see following words.
 
 ```
 (S)earch
@@ -50,12 +50,12 @@ It is easy to understand.
 
 ## Treasure hunter
 
-If you enter `T` in meue.
+If you enter `T` in the menu.
 
-you shell enter the data name to let program read.
+You shall enter the data name for the program to load.
 
-If doesn't have file, print error message and return.
+If the file doesn't exist, the error messages will be printed and you will return to the main menu.
 
-And enter key and treasure position.
+Otherwise, simply enter key and treasure positions.
 
-Result will show on the screen.
+The result will be shown on the screen.
