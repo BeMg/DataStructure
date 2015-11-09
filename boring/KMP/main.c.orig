@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+char a[10000];
+char b[10000];
+int f[100000];
+int lens,lenp;
+
+void failure() {
+    memset(f, 0, sizeof(f));
+
+    int i = 0, j = 1;
+    while (j < lenp) {
+        if (b[i] == b[j]) {
+            f[j] = i + 1;
+            i++;
+            j++;
+        } else {
+            if (i != 0) {
+                i = f[i - 1];
+            } else {
+                f[j] = 0;
+                j++;
+            }
+        }
+    }
+
+}
+
+int KMP(){
+    int i,j;
+    i=0;
+    j=0;
+    int cnt=0;
+    while(i<lens) {
+        if(a[i]==b[j]){
+            i++;
+            j++;
+        }
+        else if(j==0) i++;
+        else j = failure[j-1];
+        if(j==lenp){
+            cnt++;
+            j=0;
+        }
+    }
+    return cnt;
+}
+
+
+int main() {
+    int n;
+    scanf("%d\n",&n);
+
+    while(n--) {
+        memset(a, '\0', sizeof(a));
+        fgets(a,10000,stdin);
+        lens = strlen(a);
+        if(a[lens-1]=='\n') {
+            a[lens-1] = '\0';
+            lens--;
+        }
+        memset(b, '\0', sizeof(b));
+        fgets(b,10000,stdin);
+        lenp = strlen(b);
+        if(a[lenp-1]=='\n') {
+            a[lenp-1] = '\0';
+            lenp--;
+        }
+        failure();
+    }
+
+    return 0;
+}

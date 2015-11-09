@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-int isp[] = {0,19,12,12,13,13,13,0};
-int icp[] = {20,19,12,12,13,13,13,0};
+int icp[] = {0,19,12,12,13,13,13,0};
+int isp[] = {20,19,12,12,13,13,13,0};
 //lparen, rparen, plus, minus, times, divide, mod, eos, operand
 int top = 0;
 int stack[500];
 
 
-int trans(char *symbol) {
+int treansfer(char *symbol) {
     switch (symbol[0]) {
     case '(':
         return 0;
@@ -30,7 +30,7 @@ int trans(char *symbol) {
         return 8;
     }
 }
-char a = '%';
+
 void print(int token) {
     switch (token) {
     case 2:
@@ -46,7 +46,7 @@ void print(int token) {
         printf("/");
         break;
     case 6:
-        printf("%c",a);
+        printf("%");
         break;
     }
 }
@@ -56,7 +56,7 @@ int pop() {
     return stack[top+1];
 }
 
-void push(int temp) {
+void push(int temp){
     stack[++top] = temp;
 }
 
@@ -67,23 +67,13 @@ int main() {
     scanf("%d\n",&n);
     char symbol[5];
     fgets(symbol,5,stdin);
-    int flag = 1;
     while(n--) {
-        if(flag)
-            flag = 0;
-        else
-            printf("\n");
         top = 0;
         stack[top] = 7;
-        while(fgets(symbol,5,stdin)!=NULL && symbol[0]!='\n') {
-            //printf("Stack: ");
-            //for(int i=0; i<=top; i++)
-            //    printf("%d%c",stack[i],i==top ? '\n' : ' ');
+        while(fgets(symbol,5,stdin)!=NULL) {
             int len = strlen(symbol);
             symbol[len-1] = '\0';
-            token = trans(symbol);
-            //printf("Token: %c\n",token);
-            //printf("Token : %d\n",token);
+            token = transfer(symbol);
             if(token == 8) {
                 printf("%c",symbol[0]);
             } else if(token == 1) {
@@ -93,11 +83,10 @@ int main() {
                 pop();
             }
             else {
-                //printf("isp: %d icp: %d\n",isp[stack[top]],icp[token]);
                 while(isp[stack[top]]>=icp[token]) {
                     print(pop());
                 }
-                push(token);
+                push();
             }
         }
         while((token = pop())!= 7)
