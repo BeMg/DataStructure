@@ -8,13 +8,13 @@ int volumn,v,u,m;
 int bike[MAX];
 int dist[MAX][MAX];
 int used[MAX]={0};
-int shortest;
+long long int shortest;
 int G[MAX][MAX]={0};
 int cnt = -1;
 int ans_cnt = 0;
 int ans=1e9;
-char ans_route[MAX];
-char temp[MAX];
+int ans_route[MAX];
+int temp[MAX];
 
 
 void floyd_Warshall(){
@@ -26,6 +26,13 @@ void floyd_Warshall(){
             }
         }
     }
+}
+
+int pow_function(int n){
+    int num=1;
+    for(int i=0; i<n; i++)
+        num*=10;
+    return num;
 }
 
 int dfs(int curr, int route, int carry){
@@ -47,14 +54,14 @@ int dfs(int curr, int route, int carry){
     }
     used[curr] = 1;
     cnt++;
-    temp[cnt] = curr+'0';
+    temp[cnt] = curr;
     for(int i=1; i<v; i++){
         if(G[curr][i]!=0 && !used[i]){
             dfs(i,route+G[curr][i],carry+volumn/2-bike[i]);
         }
     }
     used[curr] = 0;
-    temp[cnt] = '\0';
+    temp[cnt] = 0;
     cnt--;
     return 0;
 }
@@ -77,6 +84,13 @@ int main(){
     int from,to,far;
     for(int i=0; i<m; i++){
         scanf("%d %d %d",&from,&to,&far);
+        /*
+        if(G[to][from] || G[from][to]){
+            while(1){
+                printf("error\n");
+            }
+        }
+        */
         G[to][from] = far;
         G[from][to] = far;
         dist[to][from] = far;
@@ -88,13 +102,13 @@ int main(){
     if(ans>=0){
         printf("%d ",ans);
         for(int i=0; i<=ans_cnt; i++){
-            printf("%c>",ans_route[i]);
+            printf("%d>",ans_route[i]);
         }
         printf("%d 0\n",u);
-    }else{
+    }else if(ans<0){
         printf("0 ");
         for(int i=0; i<=ans_cnt; i++){
-            printf("%c>",ans_route[i]);
+            printf("%d>",ans_route[i]);
         }
         printf("%d %d\n",u,-ans);
     }
