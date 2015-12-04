@@ -10,7 +10,7 @@ int dist[MAX][MAX];
 int used[MAX]={0};
 int shortest;
 int G[MAX][MAX]={0};
-int cnt = 0;
+int cnt = -1;
 int ans_cnt = 0;
 int ans=1e9;
 char ans_route[MAX];
@@ -35,23 +35,27 @@ int dfs(int curr, int route, int carry){
         if(route == shortest){
             if(abs(ans) > abs(carry)){
                 ans = carry;
+                //printf("cnt: %d\n",cnt);
+                //puts(temp);
                 memset(ans_route,'\0',sizeof(ans_route));
                 ans_cnt = cnt;
-                for(int i=0; i<cnt; i++)
+                for(int i=0; i<=cnt; i++)
                     ans_route[i] = temp[i];
             }
         }
         return 0;
     }
     used[curr] = 1;
-    temp[cnt++] = curr+'0';
+    cnt++;
+    temp[cnt] = curr+'0';
     for(int i=1; i<v; i++){
         if(G[curr][i]!=0 && !used[i]){
             dfs(i,route+G[curr][i],carry+volumn/2-bike[i]);
         }
     }
     used[curr] = 0;
-    temp[cnt--] = '\0';
+    temp[cnt] = '\0';
+    cnt--;
     return 0;
 }
 
@@ -83,13 +87,13 @@ int main(){
     dfs(0,0,0);
     if(ans>=0){
         printf("%d ",ans);
-        for(int i=0; i<ans_cnt; i++){
+        for(int i=0; i<=ans_cnt; i++){
             printf("%c>",ans_route[i]);
         }
         printf("%d 0\n",u);
     }else{
         printf("0 ");
-        for(int i=0; i<ans_cnt; i++){
+        for(int i=0; i<=ans_cnt; i++){
             printf("%c>",ans_route[i]);
         }
         printf("%d %d\n",u,-ans);
