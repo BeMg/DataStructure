@@ -11,7 +11,6 @@ int used[MAX]={0};
 int shortest;
 int G[MAX][MAX]={0};
 int cnt = 0;
-int ans_cnt = 0;
 int ans=1e9;
 char ans_route[MAX];
 char temp[MAX];
@@ -29,6 +28,7 @@ void floyd_Warshall(){
 }
 
 int dfs(int curr, int route, int carry){
+    printf("cnt: %d\n",cnt);
     if(route > shortest)
         return 0;
     if(curr == u){
@@ -36,7 +36,6 @@ int dfs(int curr, int route, int carry){
             if(abs(ans) > abs(carry)){
                 ans = carry;
                 memset(ans_route,'\0',sizeof(ans_route));
-                ans_cnt = cnt;
                 for(int i=0; i<cnt; i++)
                     ans_route[i] = temp[i];
             }
@@ -81,18 +80,7 @@ int main(){
     floyd_Warshall();
     shortest = dist[0][u];
     dfs(0,0,0);
-    if(ans>=0){
-        printf("%d ",ans);
-        for(int i=0; i<ans_cnt; i++){
-            printf("%c>",ans_route[i]);
-        }
-        printf("%d 0\n",u);
-    }else{
-        printf("0 ");
-        for(int i=0; i<ans_cnt; i++){
-            printf("%c>",ans_route[i]);
-        }
-        printf("%d %d\n",u,-ans);
-    }
+    puts(ans_route);
+    printf("%d\n",ans);
     return 0;
 }
