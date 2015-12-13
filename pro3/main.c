@@ -12,6 +12,7 @@ long long int shortest;
 int G[MAX][MAX]={0};
 int cnt = -1;
 int ans_cnt = 0;
+int ans_owe;
 int ans=1e9;
 int ans_route[MAX];
 int temp[MAX];
@@ -28,20 +29,14 @@ void floyd_Warshall(){
     }
 }
 
-int pow_function(int n){
-    int num=1;
-    for(int i=0; i<n; i++)
-        num*=10;
-    return num;
-}
 
-int dfs(int curr, int route, int carry){
-    if(route > shortest)
-        return 0;
+int dfs(int curr, int route, int carry, int owe){
+
     if(curr == u){
         if(route == shortest){
-            if(abs(ans) > abs(carry)){
+            if(abs(ans)+abs(ans_owe) > abs(carry)+abs(owe)){
                 ans = carry;
+                ans_owe = owe;
                 //printf("cnt: %d\n",cnt);
                 //puts(temp);
                 memset(ans_route,'\0',sizeof(ans_route));
@@ -55,9 +50,18 @@ int dfs(int curr, int route, int carry){
     used[curr] = 1;
     cnt++;
     temp[cnt] = curr;
+    int need;
     for(int i=1; i<v; i++){
         if(G[curr][i]!=0 && !used[i]){
-            dfs(i,route+G[curr][i],carry+volumn/2-bike[i]);
+            need = (bike[i]-volumn/2);
+            if(need>=0)
+                dfs(i,route+G[curr][i],carry,owe+need);
+            else{
+                if(owe>abs(need)){
+                    dfs(i,route+G[curr][i],carry,owe-abs(need));
+                }else
+                    dfs(i,route+G[curr][i],carry+abs(need)-owe,0);
+            }
         }
     }
     used[curr] = 0;
@@ -79,6 +83,7 @@ int main(){
                 dist[i][j] = 1e9;
         }
     }
+    bike[0] = 0;
     for(int i=1; i<v; i++)
         scanf("%d",&bike[i]);
     int from,to,far;
@@ -96,21 +101,23 @@ int main(){
         dist[to][from] = far;
         dist[from][to] = far;
     }
+    /*
+    for(int i=0; i<v; i++){
+        for(int j=0; j<v; j++){
+            printf("%d%c",G[i][j],j==v-1 ? '\n' : ' ');
+        }
+    }
+    */
     floyd_Warshall();
     shortest = dist[0][u];
-    dfs(0,0,0);
-    if(ans>=0){
-        printf("%d ",ans);
-        for(int i=0; i<=ans_cnt; i++){
-            printf("%d>",ans_route[i]);
-        }
-        printf("%d 0\n",u);
-    }else if(ans<0){
-        printf("0 ");
-        for(int i=0; i<=ans_cnt; i++){
-            printf("%d>",ans_route[i]);
-        }
-        printf("%d %d\n",u,-ans);
+    dfs(0,0,0,0);
+    //printf("ans:%d %d\n",ans_owe,ans);
+
+    printf("%d ",ans);
+    for(int i=0; i<=ans_cnt; i++){
+        printf("%d>",ans_route[i]);
     }
+    printf("%d %d\n",u,ans_owe);
+
     return 0;
 }
