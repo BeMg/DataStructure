@@ -1,72 +1,18 @@
-# DS 作業三 Graph
+# DS HWC Graph
 
-## 題目描述
+Student ID: 403410061
+Name: Chen, Pi-You
 
-UBIKE 是一個腳踏車租借服務，有一總站 YMC 有很多小站在各處，我們的工作是找出一條到**指定的站點**是**最短**路徑，且使路過各站的腳踏車數皆**平衡**(在此定義平衡為一站的腳踏車數為最大容量的一半)的**成本最小**(成本是需要從 YMC 帶出與帶回的腳踏車數)。
-
-YMC 編號為 0，其餘小站則依序編號下去。
-
-## 題目輸入
-
-第一行有四個數字依序是，一個站的最大容量，有多少個小站，我們指定要抵達的站，有幾條路。
-
-第二行是每個小站目前所持有的腳踏車數。
-
-其後是由三個數字所組成，從站到站的路徑長。
+#HOW TO COMPLIE
 
 ```
-10 3 3 5
-6 7 0
-0 1 1
-0 2 1
-0 3 3
-1 3 1
-2 3 1
-```
-## 題目輸出
-
-第一個數字與最後一個數字是必須帶出多少腳踏車與帶回多少腳踏車才會造成各站點腳踏車數平衡。
-
-中間若干數為你走過的路徑。
-
-```
-3 0>2>3 0
+gcc -std=c99 -o a.out main.c
 ```
 
-## 想法
+## INTRO
 
-我們已知起點與終點，那麼第一步就是找出這兩點的最短路徑，因為題目要求，可能的答案只會是很多條最短路徑中的其中一條。
+Ubike is a bike-rent service, we have to make a shortest path to remain the balance of bike in each station.
 
-最短路徑有很多種求法，在這裡介紹一個演算法名為  floyd-Warshall  他可以用簡單的三個for迴圈，解決點到點的最短路徑問題
+## HOW TO WORK
 
-先定義 path[i][j] 是從 i->j 已知的最短路徑
-
-```cpp
-for(int k=0; k<n; k++)
-    for(int i=0; i<n; i++)
-        for(int j=0; j<n; j++)
-            if(path[i][k] > path[i][k] + path[k][j])
-                path[i][k] = path[i][k] + path[k][j];
-```
-
-folyd-Warshall 的概念為
-
-如果 i->j 的距離比從 i->k->j 長則更新。
-
-演算法的證明與一些需要注意的地方網路上到處都是請自行搜尋。
-
-這麼一來，題目所需要的最短路徑就是 path[0][目標]。
-
-接著我們只需要使用 DFS 找出所有符合最短路徑的路，並且比對他的成本以找出答案並輸出。
-
-## 需注意的地方
-
-當我們從 YMC 出發，抵達目標站後，會瞬間帶著多出來的腳踏車傳送回 YMC。因此我們不能用後面的腳踏車補前面的洞。
-
-列表下來大致上是
-
-1. 一個站需要補腳踏車，你手上從前幾站收回來的夠用，直接補即可。
-
-2. 一個站需要補腳踏車，你手上的腳踏車數不夠，扣掉手頭上的後剩餘的則需要從總站帶腳踏車出來補。
-
-3. 一個站需要帶走腳踏車，帶走即可。
+Use Floya-Warshall to find the shortest path from start to goal. Then DFS all possible path to balance bike number, choice the least cost one. Output it.
