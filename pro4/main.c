@@ -12,7 +12,7 @@ char a[100000];
 char path[10000];
 
 typedef struct {
-    int ID;
+    int Id;
     char FirstName[15];
     char LastName[15];
     char Gender;
@@ -21,7 +21,7 @@ typedef struct {
 } Date;
 
 Date data[10000];
-int cnt=0;
+int data_cnt=0;
 
 void variable_init() {
     memset(CheckForItem,0,sizeof(CheckForItem));
@@ -118,7 +118,24 @@ void Get_input() {
 }
 
 void Get_file() {
-
+    FILE* pfile = fopen(path,"r");
+    char inp[10000];
+    while(fgets(inp,10000,pfile)!=NULL){
+        int len = strlen(inp);
+        if(inp[len-1]=='\n'){
+            inp[len-1] = '\0';
+            len--;
+        }
+        for(int i=0; i<len; i++){
+            if(inp[i]=='\"' || inp[i]==',')
+                inp[i] = ' ';
+        }
+        sscanf(inp,"%d %s %s %c %d %s",&data[data_cnt].Id,data[data_cnt].FirstName,
+            data[data_cnt].LastName,&data[data_cnt].Gender,&data[data_cnt].Age,data[data_cnt].PhoneNum);
+        memset(inp,'\0',sizeof(inp));
+        data_cnt++;
+    }
+    fclose(pfile);
 }
 
 int main() {
@@ -130,7 +147,7 @@ int main() {
         }
         if(strcmp(a,"quit")==0)break;
         Get_input();
-
+        /*
         printf("Select: ");
         for(int i=0; i<6; i++)
             printf("%d%c",CheckForItem[i],i==5 ? '\n' : ' ');
@@ -138,7 +155,14 @@ int main() {
         for(int i=0; i<6; i++)
             printf("%d%c",CheckForSorted[i],i==5 ? '\n' : ' ');
         puts(path);
-
+        */
+        Get_file();
+        /*
+        for(int i=0; i<data_cnt; i++){
+            printf("%d\t%s\t%s\t%c\t%d\t%s\n",data[i].Id,data[i].FirstName,
+                data[i].LastName,data[i].Gender,data[i].Age,data[i].PhoneNum);
+        }
+        */
     }
     return 0;
 }
