@@ -34,20 +34,20 @@ int item_cmp(int a, int b, int n) {
         return data[a].Id - data[b].Id;
         break;
     case 1:
-        return strcmp(data[a].FirstName,data[b].FirstName)
-        break;
+        return strcmp(data[a].FirstName,data[b].FirstName);
+               break;
     case 2:
-        return strcmp(data[a].LastName,data[b].LastName)
-        break;
+        return strcmp(data[a].LastName,data[b].LastName);
+               break;
     case 3:
-        return strcmp(data[a].Gender,data[b].Gender)
-        break;
+        return data[a].Gender - data[b].Gender;
+               break;
     case 4:
-        return data[a].Age - data[b].Age
-        break;
+        return data[a].Age - data[b].Age;
+               break;
     case 5:
-        return strcmp(data[a].PhoneNum,data[b].PhoneNum)
-        break;
+        return strcmp(data[a].PhoneNum,data[b].PhoneNum);
+               break;
     }
     return 0;
 }
@@ -70,7 +70,7 @@ int cmp(int a, int b) {
     }
 }
 
-int stable_sort(int a, int b){
+int stable_sort(int a, int b) {
     if(item_cmp(a,b,First) == 0 && item_cmp(a,b,Second) == 0)
         return data[a].Id - data[b].Id;
     return 0;
@@ -78,7 +78,7 @@ int stable_sort(int a, int b){
 
 
 void swap(void *a,void *b,size_t size) {
-    void* temp = malloc(size);
+    void* temp = malloc(sizeof(data));
     memcpy(temp,a,size);
     memcpy(a,b,size);
     memcpy(b,temp,size);
@@ -90,7 +90,8 @@ int partition(void *a,int len,int pivot_idx,size_t size) {
     swap(a+pivot_idx*size,a+(len-1)*size,size);
     int storeindex = 0;
     for(i=0; i<len-1; i++) {
-        if(cmp(i,len-1<0) {
+        printf("A: %d B: %d\n",i,len-1);
+        if(cmp(i,len-1)<0) {
         swap(a+i*size,a+storeindex*size,size);
             storeindex++;
         }
@@ -103,9 +104,9 @@ void quick_sort(void *a,int len,size_t size) {
     srand(time(NULL));
     if(len==0 || len == 1) return;
     int pivot = rand()%len;
-    int small_len = partition(a,len,pivot,size,cmp);
-    quick_sort(a,small_len,size,cmp);
-    quick_sort(a+(small_len+1)*size,len-small_len-1,size,cmp);
+    int small_len = partition(a,len,pivot,size);
+    quick_sort(a,small_len,size);
+    quick_sort(a+(small_len+1)*size,len-small_len-1,size);
 }
 
 void bubble_sort(void *a,int len,size_t size) {
@@ -128,6 +129,7 @@ void variable_init() {
     CheckForForm = 0;
     CheckForOrder = 0;
     CheckForBy = 0;
+    data_cnt = 0;
 }
 
 /*transfer string to easy-use number*/
@@ -344,13 +346,25 @@ void print() {
 }
 
 void Double_sort() {
-
+    printf("IN\n");
+    if(abs(CheckForSorted[First])==1)
+        quick_sort(data,data_cnt,sizeof(data));
+    /*
+    else if(abs(CheckForSorted[First])==2)
+        bubble_sort(data,data_cnt,sizeof(data));
+    if(abs(CheckForSorted[Second])==1)
+        quick_sort(data,data_cnt,sizeof(data));
+    else if(abs(CheckForSorted[Second])==2)
+        bubble_sort(data,data_cnt,sizeof(data));
+    */
+    printf("OUT\n");
 }
 
 
 
 int main() {
     while(fgets(a,100000,stdin)) {
+        variable_init();
         int len = strlen(a);
         if(a[len-1]=='\n') {
             a[len-1] = '\0';
@@ -368,7 +382,7 @@ int main() {
         puts(path);
         */
         if(Syntax_ERROR()) {
-            printf("You have an error in your SQL syntax\n");
+            printf("You have an error in your SQL syntax.\n");
             continue;
         }
         if(Get_file()) {
@@ -382,7 +396,6 @@ int main() {
         }
         */
         print();
-
     }
     return 0;
 }

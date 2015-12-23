@@ -1,4 +1,5 @@
 select * from Contacts.csv
-select FirstName, LastName from Contacts.csv
-select * ORDER BY LastName -1
-select Age, LastName FROM Contacts.csv ORDER BY LastName -1, Age DESC -2
+seelect * from Contacts.csv
+from Contacts.csv Select LastName
+select Age, FirstName from Contacts.csv
+quit
