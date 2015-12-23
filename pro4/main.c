@@ -24,6 +24,8 @@ typedef struct {
 Date data[10000];
 int data_cnt=0;
 
+/*inital all variable*/
+
 void variable_init() {
     memset(CheckForItem,0,sizeof(CheckForItem));
     memset(CheckForSorted,0,sizeof(CheckForSorted));
@@ -32,6 +34,8 @@ void variable_init() {
     CheckForOrder = 0;
     CheckForBy = 0;
 }
+
+/*transfer string to easy-use number*/
 
 int CheckWhatGet(char* temp) {
     if(strcmp(temp,"Id")==0)
@@ -59,6 +63,8 @@ int CheckWhatGet(char* temp) {
     return -1;
 }
 
+/*SortOption is different from other, so let it independent.*/
+
 int CheckForSortOption(char* temp) {
     if(strcmp(temp,"-1")==0)
         return 1;
@@ -71,6 +77,14 @@ int CheckForSortOption(char* temp) {
     return -1;
 }
 
+/*
+We should getline and strtok by space to get string.
+Use mode to control the flow.
+mode 0 start
+mode 1 select
+mode 2 from
+mode 3 Sort Option
+*/
 
 void Get_input() {
     char* temp = strtok(a," ,");
@@ -123,6 +137,11 @@ void Get_input() {
 
 }
 
+/*
+fopen to read file, in file is not exist, print error.
+transfering "" and , to space is easy to find the data.
+*/
+
 int Get_file() {
     FILE* pfile = fopen(path,"r");
     if(pfile==NULL)
@@ -146,6 +165,12 @@ int Get_file() {
     fclose(pfile);
     return 0;
 }
+
+/*
+Two accept format
+Select = from = 1, order = by = 0
+Select = from = order = by = 1
+*/
 
 int Syntax_ERROR(){
     if(CheckForSelect && CheckForForm){
