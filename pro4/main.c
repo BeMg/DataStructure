@@ -6,6 +6,7 @@ int CheckForSorted[6];
 int CheckForSelect;
 int CheckForForm;
 int CheckForOrder;
+int CheckForBy;
 
 
 char a[100000];
@@ -29,6 +30,7 @@ void variable_init() {
     CheckForSelect = 0;
     CheckForForm = 0;
     CheckForOrder = 0;
+    CheckForBy = 0;
 }
 
 int CheckWhatGet(char* temp) {
@@ -86,13 +88,17 @@ void Get_input() {
         }
         else if(input == 8) {
             mode = 3;
-        }
-        else if(input == 9 && mode == 3) {
             CheckForOrder = 1;
         }
+        else if(input == 9 && mode == 3) {
+            CheckForBy = 1;
+        }
         else if(mode == 1) {
-            if(input == 10)
-                memset(CheckForItem,1,sizeof(CheckForItem));
+            if(input == 10){
+                for(int i=0; i<6; i++){
+                    CheckForItem[i] = 1;
+                }
+            }
             else
                 CheckForItem[input] = 1;
         }
@@ -117,8 +123,10 @@ void Get_input() {
 
 }
 
-void Get_file() {
+int Get_file() {
     FILE* pfile = fopen(path,"r");
+    if(pfile==NULL)
+        return 1;
     char inp[10000];
     while(fgets(inp,10000,pfile)!=NULL){
         int len = strlen(inp);
@@ -136,6 +144,16 @@ void Get_file() {
         data_cnt++;
     }
     fclose(pfile);
+    return 0;
+}
+
+int Syntax_ERROR(){
+    if(CheckForSelect && CheckForForm){
+        if(CheckForOrder+CheckForBy == 1)
+            return 1;
+        return 0;
+    }
+    return 1;
 }
 
 int main() {
@@ -147,7 +165,7 @@ int main() {
         }
         if(strcmp(a,"quit")==0)break;
         Get_input();
-        /*
+
         printf("Select: ");
         for(int i=0; i<6; i++)
             printf("%d%c",CheckForItem[i],i==5 ? '\n' : ' ');
@@ -155,14 +173,22 @@ int main() {
         for(int i=0; i<6; i++)
             printf("%d%c",CheckForSorted[i],i==5 ? '\n' : ' ');
         puts(path);
-        */
-        Get_file();
+
+        if(Syntax_ERROR()){
+            printf("You have an error in your SQL syntax\n");
+            continue;
+        }
+        if(Get_file()){
+            printf("This file does not exist!\n");
+            continue;
+        }
         /*
         for(int i=0; i<data_cnt; i++){
             printf("%d\t%s\t%s\t%c\t%d\t%s\n",data[i].Id,data[i].FirstName,
                 data[i].LastName,data[i].Gender,data[i].Age,data[i].PhoneNum);
         }
         */
+
     }
     return 0;
 }
