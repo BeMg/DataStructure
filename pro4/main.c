@@ -28,6 +28,14 @@ typedef struct {
 Date data[10000];
 int data_cnt=0;
 
+int item_cmp(int a, int b, int n){
+    if()
+}
+
+int cmp(int a, int b){
+
+}
+
 void swap(void *a,void *b,size_t size) {
     void* temp = malloc(size);
     memcpy(temp,a,size);
@@ -36,12 +44,12 @@ void swap(void *a,void *b,size_t size) {
     free(temp);
 }
 
-int partition(void *a,int len,int pivot_idx,size_t size,int (*cmp)(const void*a,const void*b)) {
+int partition(void *a,int len,int pivot_idx,size_t size) {
     int i;
     swap(a+pivot_idx*size,a+(len-1)*size,size);
     int storeindex = 0;
     for(i=0; i<len-1; i++) {
-        if(cmp(a+i*size,a+(len-1)*size)<0) {
+        if(cmp(i,len-1<0) {
             swap(a+i*size,a+storeindex*size,size);
             storeindex++;
         }
@@ -50,7 +58,7 @@ int partition(void *a,int len,int pivot_idx,size_t size,int (*cmp)(const void*a,
     return storeindex;
 }
 
-void quick_sort(void *a,int len,size_t size,int (*cmp)(const void*a,const void*b)) {
+void quick_sort(void *a,int len,size_t size) {
     srand(time(NULL));
     if(len==0 || len == 1) return;
     int pivot = rand()%len;
@@ -59,10 +67,10 @@ void quick_sort(void *a,int len,size_t size,int (*cmp)(const void*a,const void*b
     quick_sort(a+(small_len+1)*size,len-small_len-1,size,cmp);
 }
 
-void bubble_sort(void *a,int len,size_t size,int (*cmp)(const void*a,const void*b)) {
+void bubble_sort(void *a,int len,size_t size) {
     for(int i=0; i<len; i++) {
         for(int j=0; j<i-1; j++) {
-            if(cmp(a+i*size,a+j*size)<0)
+            if(cmp(i,j)<0)
                 swap(a+i*size,a+j*size,size);
         }
     }
@@ -150,7 +158,7 @@ void Get_input() {
             mode = 3;
             CheckForOrder = 1;
         }
-        else if(input == 9 && mode == 3) {
+        else if(input == 9 && mode == 3 ) {
             CheckForBy = 1;
         }
         else if(mode == 1) {
@@ -293,6 +301,12 @@ void print() {
         flag = 1;
     }
 }
+
+void Double_sort(){
+
+}
+
+
 
 int main() {
     while(fgets(a,100000,stdin)) {
