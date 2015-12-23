@@ -55,6 +55,15 @@ void quick_sort(void *a,int len,size_t size,int (*cmp)(const void*a,const void*b
     quick_sort(a+(small_len+1)*size,len-small_len-1,size,cmp);
 }
 
+void bubble_sort(void *a,int len,size_t size,int (*cmp)(const void*a,const void*b)){
+    for(int i=0; i<len; i++){
+        for(int j=0; j<i-1; j++){
+            if(cmp(a+i*size,a+j*size)<0)
+                swap(a+i*size,a+j*size,size);
+        }
+    }
+}
+
 /*inital all variable*/
 
 void variable_init() {
