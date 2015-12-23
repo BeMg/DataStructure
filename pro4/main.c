@@ -7,7 +7,8 @@ int CheckForSelect;
 int CheckForForm;
 int CheckForOrder;
 int CheckForBy;
-
+int First;
+int Second;
 
 char a[100000];
 char path[10000];
@@ -69,6 +70,8 @@ void bubble_sort(void *a,int len,size_t size,int (*cmp)(const void*a,const void*
 void variable_init() {
     memset(CheckForItem,0,sizeof(CheckForItem));
     memset(CheckForSorted,0,sizeof(CheckForSorted));
+    First = -1;
+    Second = -1;
     CheckForSelect = 0;
     CheckForForm = 0;
     CheckForOrder = 0;
@@ -136,11 +139,11 @@ void Get_input() {
             mode = 1;
             CheckForSelect = 1;
         }
-        else if(input == 7) {
+        else if(input == 7 && mode == 1) {
             mode = 2;
             CheckForForm = 1;
         }
-        else if(input == 8) {
+        else if(input == 8 && mode == 2) {
             mode = 3;
             CheckForOrder = 1;
         }
@@ -253,6 +256,7 @@ int main() {
                 data[i].LastName,data[i].Gender,data[i].Age,data[i].PhoneNum);
         }
         */
+
 
     }
     return 0;
