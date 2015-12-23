@@ -1,5 +1,3 @@
+select * from Contacts.csv order by Gender DESC
 select * from Contacts.csv
-seelect * from Contacts.csv
-from Contacts.csv Select LastName
-select Age, FirstName from Contacts.csv
 quit

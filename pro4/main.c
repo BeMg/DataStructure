@@ -78,7 +78,7 @@ int stable_sort(int a, int b) {
 
 
 void swap(void *a,void *b,size_t size) {
-    void* temp = malloc(sizeof(data));
+    void* temp = malloc(size);
     memcpy(temp,a,size);
     memcpy(a,b,size);
     memcpy(b,temp,size);
@@ -111,9 +111,9 @@ void quick_sort(void *a,int len,size_t size) {
 
 void bubble_sort(void *a,int len,size_t size) {
     for(int i=0; i<len; i++) {
-        for(int j=0; j<i-1; j++) {
-            if(cmp(i,j)<0)
-                swap(a+i*size,a+j*size,size);
+        for(int j=0; j<len-i-1; j++) {
+            if(cmp(j,j+1)>0)
+                swap(a+j*size,a+(j+1)*size,size);
         }
     }
 }
@@ -346,18 +346,17 @@ void print() {
 }
 
 void Double_sort() {
-    printf("IN\n");
-    if(abs(CheckForSorted[First])==1)
-        quick_sort(data,data_cnt,sizeof(data));
+    bubble_sort(data,data_cnt,sizeof(data[0]));
     /*
-    else if(abs(CheckForSorted[First])==2)
-        bubble_sort(data,data_cnt,sizeof(data));
-    if(abs(CheckForSorted[Second])==1)
-        quick_sort(data,data_cnt,sizeof(data));
-    else if(abs(CheckForSorted[Second])==2)
-        bubble_sort(data,data_cnt,sizeof(data));
+    if(First!=-1 && abs(CheckForSorted[First])==1)
+        quick_sort(data,data_cnt,sizeof(data[0]));
+    else if(First!=-1 && abs(CheckForSorted[First])==2)
+        bubble_sort(data,data_cnt,sizeof(data[0]));
+    if(Second!=-1 && abs(CheckForSorted[Second])==1)
+        quick_sort(data,data_cnt,sizeof(data[0]));
+    else if(Second!=-1 && abs(CheckForSorted[Second])==2)
+        bubble_sort(data,data_cnt,sizeof(data[0]));
     */
-    printf("OUT\n");
 }
 
 
@@ -395,6 +394,7 @@ int main() {
                 data[i].LastName,data[i].Gender,data[i].Age,data[i].PhoneNum);
         }
         */
+        Double_sort();
         print();
     }
     return 0;
