@@ -28,12 +28,56 @@ typedef struct {
 Date data[10000];
 int data_cnt=0;
 
-int item_cmp(int a, int b, int n){
-    if()
+int item_equip(int a, int b, int n) {
+    switch (n) {
+    case 0:
+        if(data[a].Id == data[b].Id)
+            return 1;
+        break;
+    case 1:
+        if(strcmp(data[a].FirstName,data[b].FirstName)==0)
+            return 1;
+        break;
+    case 2:
+        if(strcmp(data[a].LastName,data[b].LastName)==0)
+            return 1;
+        break;
+    case 3:
+        if(strcmp(data[a].Gender,data[b].Gender)==0)
+            return 1;
+        break;
+    case 4:
+        if(data[a].Age == data[b].Age)
+            return 1;
+        break;
+    case 5:
+        if(strcmp(data[a].PhoneNum,data[b].PhoneNum)==0)
+            return 1;
+        break;
+    }
+    return 0;
 }
 
-int cmp(int a, int b){
+int item_cmp(int a, int b, int n) {
 
+}
+
+int cmp(int a, int b) {
+    int temp;
+    if(Second!=-1 && item_equip(a,b,First)) {
+        temp = item_cmp(a,b,Second);
+        if(CheckForSorted[Second]<0)
+            return -temp;
+        else
+            return temp;
+    }
+    else {
+        temp = item_cmp(a,b,First);
+        if(CheckForSorted[First]<0)
+            return -temp;
+        else
+            return temp;
+    }
 }
 
 void swap(void *a,void *b,size_t size) {
@@ -50,7 +94,7 @@ int partition(void *a,int len,int pivot_idx,size_t size) {
     int storeindex = 0;
     for(i=0; i<len-1; i++) {
         if(cmp(i,len-1<0) {
-            swap(a+i*size,a+storeindex*size,size);
+        swap(a+i*size,a+storeindex*size,size);
             storeindex++;
         }
     }
@@ -302,7 +346,7 @@ void print() {
     }
 }
 
-void Double_sort(){
+void Double_sort() {
 
 }
 
@@ -317,7 +361,7 @@ int main() {
         }
         if(strcmp(a,"quit")==0)break;
         Get_input();
-
+        /*
         printf("Select: ");
         for(int i=0; i<6; i++)
             printf("%d%c",CheckForItem[i],i==5 ? '\n' : ' ');
@@ -325,7 +369,7 @@ int main() {
         for(int i=0; i<6; i++)
             printf("%d%c",CheckForSorted[i],i==5 ? '\n' : ' ');
         puts(path);
-
+        */
         if(Syntax_ERROR()) {
             printf("You have an error in your SQL syntax\n");
             continue;
