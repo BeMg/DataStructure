@@ -1,5 +1,7 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 int CheckForItem[6];
 int CheckForSorted[6];
@@ -12,6 +14,7 @@ int Second;
 
 char a[100000];
 char path[10000];
+char col[6][10] = {"Id","FirstName","LastName","Gender","Age","PhoneNum"};
 
 typedef struct {
     int Id;
@@ -25,7 +28,7 @@ typedef struct {
 Date data[10000];
 int data_cnt=0;
 
-void swap(void *a,void *b,size_t size){
+void swap(void *a,void *b,size_t size) {
     void* temp = malloc(size);
     memcpy(temp,a,size);
     memcpy(a,b,size);
@@ -33,21 +36,21 @@ void swap(void *a,void *b,size_t size){
     free(temp);
 }
 
-int partition(void *a,int len,int pivot_idx,size_t size,int (*cmp)(const void*a,const void*b)){
-        int i;
-        swap(a+pivot_idx*size,a+(len-1)*size,size);
-        int storeindex = 0;
-        for(i=0; i<len-1; i++){
-            if(cmp(a+i*size,a+(len-1)*size)<0){
-                swap(a+i*size,a+storeindex*size,size);
-                storeindex++;
-            }
+int partition(void *a,int len,int pivot_idx,size_t size,int (*cmp)(const void*a,const void*b)) {
+    int i;
+    swap(a+pivot_idx*size,a+(len-1)*size,size);
+    int storeindex = 0;
+    for(i=0; i<len-1; i++) {
+        if(cmp(a+i*size,a+(len-1)*size)<0) {
+            swap(a+i*size,a+storeindex*size,size);
+            storeindex++;
         }
-        swap(a+(len-1)*size,a+storeindex*size,size);
-        return storeindex;
+    }
+    swap(a+(len-1)*size,a+storeindex*size,size);
+    return storeindex;
 }
 
-void quick_sort(void *a,int len,size_t size,int (*cmp)(const void*a,const void*b)){
+void quick_sort(void *a,int len,size_t size,int (*cmp)(const void*a,const void*b)) {
     srand(time(NULL));
     if(len==0 || len == 1) return;
     int pivot = rand()%len;
@@ -56,9 +59,9 @@ void quick_sort(void *a,int len,size_t size,int (*cmp)(const void*a,const void*b
     quick_sort(a+(small_len+1)*size,len-small_len-1,size,cmp);
 }
 
-void bubble_sort(void *a,int len,size_t size,int (*cmp)(const void*a,const void*b)){
-    for(int i=0; i<len; i++){
-        for(int j=0; j<i-1; j++){
+void bubble_sort(void *a,int len,size_t size,int (*cmp)(const void*a,const void*b)) {
+    for(int i=0; i<len; i++) {
+        for(int j=0; j<i-1; j++) {
             if(cmp(a+i*size,a+j*size)<0)
                 swap(a+i*size,a+j*size,size);
         }
@@ -151,8 +154,8 @@ void Get_input() {
             CheckForBy = 1;
         }
         else if(mode == 1) {
-            if(input == 10){
-                for(int i=0; i<6; i++){
+            if(input == 10) {
+                for(int i=0; i<6; i++) {
                     CheckForItem[i] = 1;
                 }
             }
@@ -172,6 +175,10 @@ void Get_input() {
             }
             else {
                 item = input;
+                if(First==-1)
+                    First = item;
+                else
+                    Second = item;
                 CheckForSorted[item] = 1;
             }
         }
@@ -190,18 +197,18 @@ int Get_file() {
     if(pfile==NULL)
         return 1;
     char inp[10000];
-    while(fgets(inp,10000,pfile)!=NULL){
+    while(fgets(inp,10000,pfile)!=NULL) {
         int len = strlen(inp);
-        if(inp[len-1]=='\n'){
+        if(inp[len-1]=='\n') {
             inp[len-1] = '\0';
             len--;
         }
-        for(int i=0; i<len; i++){
+        for(int i=0; i<len; i++) {
             if(inp[i]=='\"' || inp[i]==',')
                 inp[i] = ' ';
         }
         sscanf(inp,"%d %s %s %c %d %s",&data[data_cnt].Id,data[data_cnt].FirstName,
-            data[data_cnt].LastName,&data[data_cnt].Gender,&data[data_cnt].Age,data[data_cnt].PhoneNum);
+               data[data_cnt].LastName,&data[data_cnt].Gender,&data[data_cnt].Age,data[data_cnt].PhoneNum);
         memset(inp,'\0',sizeof(inp));
         data_cnt++;
     }
@@ -215,13 +222,76 @@ Select = from = 1, order = by = 0
 Select = from = order = by = 1
 */
 
-int Syntax_ERROR(){
-    if(CheckForSelect && CheckForForm){
+int Syntax_ERROR() {
+    if(CheckForSelect && CheckForForm) {
         if(CheckForOrder+CheckForBy == 1)
             return 1;
         return 0;
     }
     return 1;
+}
+
+void print() {
+    int flag = 1;
+    for(int i=0; i<6; i++) {
+        if(CheckForItem[i]) {
+            if(flag) {
+                printf("%s",col[i]);
+                flag = 0;
+            }
+            else {
+                printf("\t%s",col[i]);
+            }
+        }
+    }
+    printf("\n");
+    flag = 1;
+    for(int i=0; i<data_cnt; i++) {
+        if(CheckForItem[0]) {
+            if(flag==1)
+                flag = 0;
+            else
+                printf("\t");
+            printf("%d",data[i].Id);
+        }
+        if(CheckForItem[1]) {
+            if(flag==1)
+                flag = 0;
+            else
+                printf("\t");
+            printf("%s",data[i].FirstName);
+        }
+        if(CheckForItem[2]) {
+            if(flag==1)
+                flag = 0;
+            else
+                printf("\t");
+            printf("%s",data[i].LastName);
+        }
+        if(CheckForItem[3]) {
+            if(flag==1)
+                flag = 0;
+            else
+                printf("\t");
+            printf("%c",data[i].Gender);
+        }
+        if(CheckForItem[4]) {
+            if(flag==1)
+                flag = 0;
+            else
+                printf("\t");
+            printf("%d",data[i].Age);
+        }
+        if(CheckForItem[5]) {
+            if(flag==1)
+                flag = 0;
+            else
+                printf("\t");
+            printf("%s",data[i].PhoneNum);
+        }
+        printf("\n");
+        flag = 1;
+    }
 }
 
 int main() {
@@ -242,11 +312,11 @@ int main() {
             printf("%d%c",CheckForSorted[i],i==5 ? '\n' : ' ');
         puts(path);
 
-        if(Syntax_ERROR()){
+        if(Syntax_ERROR()) {
             printf("You have an error in your SQL syntax\n");
             continue;
         }
-        if(Get_file()){
+        if(Get_file()) {
             printf("This file does not exist!\n");
             continue;
         }
@@ -256,7 +326,7 @@ int main() {
                 data[i].LastName,data[i].Gender,data[i].Age,data[i].PhoneNum);
         }
         */
-
+        print();
 
     }
     return 0;
