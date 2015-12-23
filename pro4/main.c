@@ -28,43 +28,33 @@ typedef struct {
 Date data[10000];
 int data_cnt=0;
 
-int item_equip(int a, int b, int n) {
+int item_cmp(int a, int b, int n) {
     switch (n) {
     case 0:
-        if(data[a].Id == data[b].Id)
-            return 1;
+        return data[a].Id - data[b].Id;
         break;
     case 1:
-        if(strcmp(data[a].FirstName,data[b].FirstName)==0)
-            return 1;
+        return strcmp(data[a].FirstName,data[b].FirstName)
         break;
     case 2:
-        if(strcmp(data[a].LastName,data[b].LastName)==0)
-            return 1;
+        return strcmp(data[a].LastName,data[b].LastName)
         break;
     case 3:
-        if(strcmp(data[a].Gender,data[b].Gender)==0)
-            return 1;
+        return strcmp(data[a].Gender,data[b].Gender)
         break;
     case 4:
-        if(data[a].Age == data[b].Age)
-            return 1;
+        return data[a].Age - data[b].Age
         break;
     case 5:
-        if(strcmp(data[a].PhoneNum,data[b].PhoneNum)==0)
-            return 1;
+        return strcmp(data[a].PhoneNum,data[b].PhoneNum)
         break;
     }
     return 0;
 }
 
-int item_cmp(int a, int b, int n) {
-
-}
-
 int cmp(int a, int b) {
     int temp;
-    if(Second!=-1 && item_equip(a,b,First)) {
+    if(Second!=-1 && item_cmp(a,b,First)) {
         temp = item_cmp(a,b,Second);
         if(CheckForSorted[Second]<0)
             return -temp;
@@ -79,6 +69,13 @@ int cmp(int a, int b) {
             return temp;
     }
 }
+
+int stable_sort(int a, int b){
+    if(item_cmp(a,b,First) == 0 && item_cmp(a,b,Second) == 0)
+        return data[a].Id - data[b].Id;
+    return 0;
+}
+
 
 void swap(void *a,void *b,size_t size) {
     void* temp = malloc(size);
