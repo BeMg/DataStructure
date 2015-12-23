@@ -1,0 +1,56 @@
+FirstName   PhoneNum	
+Yuling	0979461352  
+T.H.	0945368720  
+Wen 0942452888	
+Kurt	0988252522  
+Walter	0986432587  
+HoChien	0912345876  
+Wayne	0987654248  
+Kevin	0975648213  
+Mike	0913548762  
+Jim 0912457762	
+id  FirstName	LastName    Gender  Age	PhoneNum    
+6   HoChien Chen    M	23  0912345876	
+10  Jim	Lin M	24  0912457762	
+8   Kevin   Lin	M   23	0975648213  
+4   Kurt    Chen    M	23  0988252522	
+9   Mike    Lin	M   22	0913548762  
+2   T.H.    Liu	F   25	0945368720  
+5   Walter  Lin	M   26	0986432587  
+7   Wayne   Lin	M   22	0987654248  
+3   Wen	Song	M   25	0942452888  
+1   Yuling  Hsueh   F	18  0979461352	
+id  LastName	Gender	
+10  Lin	M   
+9   Lin	M   
+8   Lin	M   
+7   Lin	M   
+6   Chen    M	
+5   Lin	M   
+4   Chen    M	
+3   Song    M	
+2   Liu	F   
+1   Hsueh   F	
+FirstName   LastName	Gender	Age 
+Walter	Lin M	26  
+T.H.	Liu F	25  
+Wen Song    M	25  
+Jim Lin	M   24	
+HoChien	Chen	M   23	
+Kevin	Lin M	23  
+Kurt	Chen	M   23	
+Mike	Lin M	22  
+Wayne	Lin M	22  
+Yuling	Hsueh	F   18	
+id  FirstName	PhoneNum    
+10  Jim	0912457762  
+9   Mike    0913548762	
+8   Kevin   0975648213	
+7   Wayne   0987654248	
+6   HoChien 0912345876	
+5   Walter  0986432587	
+4   Kurt    0988252522	
+3   Wen	0942452888  
+2   T.H.    0945368720	
+1   Yuling  0979461352	
+

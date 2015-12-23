@@ -1,3 +1,0 @@
-select * from Contacts.csv order by Gender DESC
-select * from Contacts.csv
-quit

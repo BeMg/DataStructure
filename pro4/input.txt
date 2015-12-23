@@ -1,0 +1,3 @@
+select id, LastName, Gender from Contacts.csv order by id DESC -2
+SELECT FirstName, LastName, Gender, Age FROM Contacts.csv ORDER BY Age DESC -2, FirstName -1
+quit
