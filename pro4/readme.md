@@ -2,10 +2,10 @@
 
 ## INTRO
 
-Create SQL-like database for the DATA look like people directory.
+Create a SQL-like database for the data that looks like phone book.
 
 
-## COMPILE
+## COMPILATION
 
 ```shell
 gcc -std=c99 -o a.out main.c
@@ -13,17 +13,17 @@ gcc -std=c99 -o a.out main.c
 
 ## SORT ALGORITHM
 
-Use two algorithm
+Using two algorithms
 
 1. Bubble Sort (default)
 
 2. Quick Sort
 
-## HOW TO WORK
+## HOW IT WORKS
 
-1. Read command a line, check the syntax.
+1. Read commands in a line, and checks the syntax.
 
->Use `strtok` to get all key word. There are three modes in this section.
+>Use `strtok` to get all key words. There are three modes in this section.
 
 >* mode 1 Select
 >* mode 2 from
